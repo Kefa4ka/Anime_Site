@@ -1,135 +1,167 @@
 /* Загальні стилі */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
   color: #333;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Забезпечує, що футер буде внизу сторінки */
 }
 
+/* Загальні стилі для хедера */
 header {
-  background-color: #333;
+  background-color: #ff6f61; /* Яскравий фон */
   color: #fff;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header h1 {
   margin: 0;
-}
-
-header a {
-  color: #fff;
-  text-decoration: none;
+  font-size: 2rem;
   font-weight: bold;
 }
 
-header a:hover {
-  text-decoration: underline;
+nav {
+  margin-top: 1rem;
 }
 
-/* Стилі для списку аніме */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s, border-bottom 0.3s;
+  padding: 0.5rem;
+}
+
+nav ul li a:hover {
+  color: #ffd54f;
+  border-bottom: 2px solid #ffd54f;
+}
+
+nav ul li a.active {
+  border-bottom: 2px solid #ffd54f;
+}
+
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #ffd54f;
+}
+
+/* Основний контент */
+main {
+  padding: 5rem 2rem 2rem;
+  flex: 1; /* Дозволяє основному контенту заповнювати простір між header і footer */
+}
+
 .anime-list {
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
-  padding: 20px;
-  gap: 20px;
-  flex: 1;
 }
 
 .anime-item {
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   overflow: hidden;
-  max-width: 300px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.anime-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(33.333% - 2rem);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .anime-item img {
   width: 100%;
   height: auto;
-  display: block;
 }
 
 .anime-item h2 {
-  margin: 10px;
-  font-size: 18px;
+  margin: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .anime-item p {
-  margin: 0 10px 10px;
-  font-size: 14px;
-  color: #666;
+  margin: 0.5rem;
+  color: #555;
 }
 
-/* Стилі для сторінки деталей аніме */
-#anime-detail {
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#anime-detail img {
-  width: 100%;
-  height: auto;
+.anime-item a {
   display: block;
-  border-radius: 8px;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: #ff6f61;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0 0 10px 10px;
+  transition: background-color 0.3s;
 }
 
-#anime-detail h2 {
-  margin: 10px 0;
-  font-size: 24px;
-}
-
-#anime-detail p {
-  margin: 5px 0;
-  font-size: 16px;
-  color: #444;
+.anime-item a:hover {
+  background-color: #e85a4f;
 }
 
 /* Футер */
 footer {
-  background-color: #333;
+  background-color: #ff6f61;
   color: #fff;
   text-align: center;
-  padding: 10px;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
   width: 100%;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Адаптивність */
+/* Адаптивний дизайн */
 @media (max-width: 768px) {
-  .anime-list {
-      flex-direction: column;
-      align-items: center;
-  }
-
   .anime-item {
-      max-width: 90%;
+      width: calc(50% - 1rem);
   }
 }
 
 @media (max-width: 480px) {
-  header {
-      padding: 10px;
-  }
-
   .anime-item {
-      max-width: 100%;
-      margin: 0;
+      width: 100%;
   }
 }
