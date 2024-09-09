@@ -1,34 +1,41 @@
-// Функція для отримання параметрів з URL
-function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        id: params.get('id')
-    };
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const apiUrl = 'https://api.jikan.moe/v4/anime';
 
-// Функція для отримання детальної інформації про аніме
-async function fetchAnimeDetails() {
-    const { id } = getQueryParams();
-
-    try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
-        const data = await response.json();
-
-        const anime = data.data;
-        const animeDetailElement = document.getElementById('anime-detail');
-
-        animeDetailElement.innerHTML = `
-            <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
-            <h2>${anime.title}</h2>
-            <p>Genre: ${anime.genres.map(genre => genre.name).join(', ')}</p>
-            <p>Episodes: ${anime.episodes}</p>
-            <p>Status: ${anime.status}</p>
-            <p>Description: ${anime.synopsis}</p>
-        `;
-    } catch (error) {
-        console.error('Error fetching anime details:', error);
+    async function fetchAnimeDetails(id) {
+        try {
+            const response = await fetch(`${apiUrl}/${id}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            return data.data;
+        } catch (error) {
+            console.error('Error fetching anime details:', error);
+            return null;
+        }
     }
-}
 
-// Викликаємо функцію для отримання даних
-fetchAnimeDetails();
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    async function loadAnimeDetails() {
+        const animeId = getQueryParam('id');
+        if (animeId) {
+            const anime = await fetchAnimeDetails(animeId);
+            if (anime) {
+                const detailContainer = document.getElementById('anime-detail');
+                detailContainer.innerHTML = `
+                    <img src="${anime.images.jpg.large_image_url}" alt="${anime.title}">
+                    <h1>${anime.title}</h1>
+                    <p>${anime.synopsis}</p>
+                    <p><strong>Episodes:</strong> ${anime.episodes}</p>
+                    <p><strong>Status:</strong> ${anime.status}</p>
+                `;
+            } else {
+                document.getElementById('anime-detail').innerHTML = '<p>Anime details not found.</p>';
+            }
+        }
+    }
+
+    loadAnimeDetails();
+});
